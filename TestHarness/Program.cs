@@ -7,6 +7,8 @@ using Intacct.Entities;
 using Intacct.Operations;
 using Newtonsoft.Json;
 
+// ReSharper disable ClassNeverInstantiated.Global
+
 namespace TestHarness
 {
 	internal class Program

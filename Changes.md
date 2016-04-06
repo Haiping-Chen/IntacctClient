@@ -1,5 +1,8 @@
 # Change log
 
+## 0.4.1
+ - extracted `IIntacctClient` interface to facilitate testing
+
 ## 0.4.0
  - enabled operations to return empty (null) results, where appropriate
  - public API surface cleanup

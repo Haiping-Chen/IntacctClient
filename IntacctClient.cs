@@ -14,7 +14,7 @@ using Intacct.Operations;
 
 namespace Intacct
 {
-	public class IntacctClient
+	public class IntacctClient : IIntacctClient
 	{
 		private readonly Uri _apiUri;
 		private readonly NetworkCredential _serviceCredential;
@@ -73,8 +73,7 @@ namespace Intacct
 		{
 			var doc = new XDocument();
 
-			var request = new XElement("request",
-			                           GetControlElement(_serviceCredential, requestId));
+			var request = new XElement("request", GetControlElement(_serviceCredential, requestId));
 			request.Add(operations.Select(op => op.GetOperationElement()));
 
 			doc.Add(request);

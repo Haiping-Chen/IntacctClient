@@ -12,7 +12,7 @@
     <description>.Net library for working with Intacct web services.</description>
     <tags>Intacct</tags>
     <releaseNotes>
-      Enabled operations to return empty (null) results, where appropriate. Cleaned up public API surface.
+      Extracted IIntacctClient interface to facilitate testing.
     </releaseNotes>
   </metadata>
   <files>

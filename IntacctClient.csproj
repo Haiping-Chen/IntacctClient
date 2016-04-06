@@ -43,6 +43,7 @@
     <Compile Include="Entities\IntacctDate.cs" />
     <Compile Include="Entities\IntacctInvoice.cs" />
     <Compile Include="Entities\IntacctLineItem.cs" />
+    <Compile Include="IIntacctClient.cs" />
     <Compile Include="Infrastructure\IntacctNameAttribute.cs" />
     <Compile Include="IIntacctServiceResponse.cs" />
     <Compile Include="IIntacctSession.cs" />
