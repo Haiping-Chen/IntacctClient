@@ -12,7 +12,7 @@
     <description>.Net library for working with Intacct web services.</description>
     <tags>Intacct</tags>
     <releaseNotes>
-      Extracted IIntacctClient interface to facilitate testing.
+      Added basic journal support (thanks to David Luxford for contribution!)
     </releaseNotes>
   </metadata>
   <files>

@@ -1,5 +1,8 @@
 # Change log
 
+## 0.4.2
+ - added basic journal support (thanks to David Luxford for contribution!)
+
 ## 0.4.1
  - extracted `IIntacctClient` interface to facilitate testing
 
