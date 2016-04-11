@@ -16,16 +16,16 @@ namespace Intacct.Entities
 
 		public IntacctCustomField(XElement sourceData)
 		{
-			Name = Util.DeserializeXmlToString(sourceData, "customfieldname");
-			Value = Util.DeserializeXmlToString(sourceData, "customfieldvalue");
+			Name = Serializer.DeserializeXmlToString(sourceData, "customfieldname");
+			Value = Serializer.DeserializeXmlToString(sourceData, "customfieldvalue");
 		}
 
 		internal override XObject[] ToXmlElements()
 		{
 			var serializedElements = new List<XObject>();
 
-			Util.SerializeStringToXml("customfieldname", Name, serializedElements);
-			Util.SerializeStringToXml("customfieldvalue", Value, serializedElements);
+			Serializer.SerializeStringToXml("customfieldname", Name, serializedElements);
+			Serializer.SerializeStringToXml("customfieldvalue", Value, serializedElements);
 
 			return serializedElements.ToArray();
 		}

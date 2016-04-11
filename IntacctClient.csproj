@@ -48,7 +48,7 @@
     <Compile Include="Entities\IntacctInvoice.cs" />
     <Compile Include="Entities\IntacctLineItem.cs" />
     <Compile Include="Entities\JournalId.cs" />
-    <Compile Include="Entities\Util.cs" />
+    <Compile Include="Entities\Serializer.cs" />
     <Compile Include="IIntacctClient.cs" />
     <Compile Include="Infrastructure\IntacctNameAttribute.cs" />
     <Compile Include="IIntacctServiceResponse.cs" />

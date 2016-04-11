@@ -53,10 +53,10 @@ namespace Intacct.Entities
 
 		public IntacctGeneralLedgerTransaction(XElement data)
 		{
-			JournalId	= Util.DeserializeXmlToString(data, "journalid");
-			DateCreated = Util.DeserializeXmlToIntacctObject<IntacctDate>(data.Element("datecreated"));
-			Description = Util.DeserializeXmlToString(data, "description");
-			GlTransactionEntries = Util.DeserializeArrayOfChildIntacctObject<IntacctGeneralLedgerEntry>(data.Element("gltransactionentries"));
+			JournalId	= Serializer.DeserializeXmlToString(data, "journalid");
+			DateCreated = Serializer.DeserializeXmlToIntacctObject<IntacctDate>(data.Element("datecreated"));
+			Description = Serializer.DeserializeXmlToString(data, "description");
+			GlTransactionEntries = Serializer.DeserializeArrayOfChildIntacctObject<IntacctGeneralLedgerEntry>(data.Element("gltransactionentries"));
 		}
 
 		/// <summary>
@@ -90,10 +90,14 @@ namespace Intacct.Entities
 		{
 			var elements = new List<XObject>();
 
-			Util.SerializeStringToXml(JournalId, "journalid", elements);
-			Util.SerializeChildIntacctObject(DateCreated, "datecreated", elements);
-			Util.SerializeStringToXml(Description, "description", elements);
-			Util.SerializeArrayOfChildIntacctObject(GlTransactionEntries, "gltransactionentries", "glentry", elements);
+			Serializer.SerializeStringToXml(JournalId, "journalid", elements);
+			Serializer.SerializeChildIntacctObject(DateCreated, "datecreated", elements);
+			Serializer.SerializeStringToXml(Description, "description", elements);
+
+			if (GlTransactionEntries?.Length > 0)
+			{
+				elements.Add(Serializer.SerializeArrayOfChildIntacctObject(GlTransactionEntries, "gltransactionentries", "glentry"));
+			}
 
 			return elements.ToArray();
 		}

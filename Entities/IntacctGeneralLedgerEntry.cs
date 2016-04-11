@@ -13,6 +13,7 @@ namespace Intacct.Entities
 	[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 	[SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 	[SuppressMessage("ReSharper", "UnusedMember.Global")]
+	[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 	public class IntacctGeneralLedgerEntry : IntacctObject
 	{
 		public IntacctGeneralLedgerEntryType Type { get; set; }
@@ -44,28 +45,28 @@ namespace Intacct.Entities
 		// Deserialize from XML
 		public IntacctGeneralLedgerEntry(XElement data)
 		{
-			GlAccountNo			= Util.DeserializeXmlToString(data, "glaccountno");
-			Document			= Util.DeserializeXmlToString(data, "document");
-			DateCreated			= Util.DeserializeXmlToIntacctObject<IntacctDate>(data.Element("datecreated"));
-			Memo				= Util.DeserializeXmlToString(data, "memo");
-			LocationId			= Util.DeserializeXmlToString(data, "locationid");
-			CostCenter			= Util.DeserializeXmlToString(data, "departmentid");
-			CustomerId			= Util.DeserializeXmlToString(data, "customerid");
-			VendorId			= Util.DeserializeXmlToString(data, "vendorid");
-			EmployeeId			= Util.DeserializeXmlToString(data, "employeeid");
-			ProjectId			= Util.DeserializeXmlToString(data, "projectid");
-			ItemId				= Util.DeserializeXmlToString(data, "itemid");
-			ClassId				= Util.DeserializeXmlToString(data, "classid");
-			CustomFields		= Util.DeserializeArrayOfChildIntacctObject<IntacctCustomField>(data.Element("customfields"));
-			ReconDate			= Util.DeserializeXmlToIntacctObject<IntacctDate>(data.Element("recon_date"));
-			Currency			= Util.DeserializeXmlToString(data, "currency");
-			ExchangeRateType	= Util.DeserializeXmlToString(data, "exchratetype");
-			ExchangeRate		= Util.DeserializeXmlToString(data, "exchrate");
+			GlAccountNo			= Serializer.DeserializeXmlToString(data, "glaccountno");
+			Document			= Serializer.DeserializeXmlToString(data, "document");
+			DateCreated			= Serializer.DeserializeXmlToIntacctObject<IntacctDate>(data.Element("datecreated"));
+			Memo				= Serializer.DeserializeXmlToString(data, "memo");
+			LocationId			= Serializer.DeserializeXmlToString(data, "locationid");
+			CostCenter			= Serializer.DeserializeXmlToString(data, "departmentid");
+			CustomerId			= Serializer.DeserializeXmlToString(data, "customerid");
+			VendorId			= Serializer.DeserializeXmlToString(data, "vendorid");
+			EmployeeId			= Serializer.DeserializeXmlToString(data, "employeeid");
+			ProjectId			= Serializer.DeserializeXmlToString(data, "projectid");
+			ItemId				= Serializer.DeserializeXmlToString(data, "itemid");
+			ClassId				= Serializer.DeserializeXmlToString(data, "classid");
+			CustomFields		= Serializer.DeserializeArrayOfChildIntacctObject<IntacctCustomField>(data.Element("customfields"));
+			ReconDate			= Serializer.DeserializeXmlToIntacctObject<IntacctDate>(data.Element("recon_date"));
+			Currency			= Serializer.DeserializeXmlToString(data, "currency");
+			ExchangeRateType	= Serializer.DeserializeXmlToString(data, "exchratetype");
+			ExchangeRate		= Serializer.DeserializeXmlToString(data, "exchrate");
 
-			var amountString = Util.DeserializeXmlToString(data, "amount");
+			var amountString = Serializer.DeserializeXmlToString(data, "amount");
 			Amount = decimal.Parse(amountString);
 
-			var entryTypeString = Util.DeserializeXmlToString(data, "trtype");
+			var entryTypeString = Serializer.DeserializeXmlToString(data, "trtype");
 			Type = string.Equals(entryTypeString, "debit")
 				       ? IntacctGeneralLedgerEntryType.Debit
 				       : IntacctGeneralLedgerEntryType.Credit;
@@ -79,26 +80,31 @@ namespace Intacct.Entities
 			// API requires lower case
 			var trtypeString = Type == IntacctGeneralLedgerEntryType.Debit ? "debit" : "credit";
 
-			Util.SerializeStringToXml(trtypeString, "trtype", serializedElements);
-			Util.SerializeStringToXml(amountString, "amount", serializedElements);
-			Util.SerializeStringToXml(GlAccountNo, "glaccountno", serializedElements);
-			Util.SerializeStringToXml(Document, "document", serializedElements);
-			Util.SerializeChildIntacctObject(DateCreated, "datecreated", serializedElements);
-			Util.SerializeStringToXml(Memo, "memo", serializedElements);
-			Util.SerializeStringToXml(LocationId, "locationid", serializedElements);
-			Util.SerializeStringToXml(CostCenter, "departmentid", serializedElements);
-			Util.SerializeStringToXml(CustomerId, "customerid", serializedElements);
-			Util.SerializeStringToXml(VendorId, "vendorid", serializedElements);
-			Util.SerializeStringToXml(EmployeeId, "employeeid", serializedElements);
-			Util.SerializeStringToXml(ProjectId, "projectid", serializedElements);
-			Util.SerializeStringToXml(ItemId, "itemid", serializedElements);
-			Util.SerializeStringToXml(ClassId, "classid", serializedElements);
-			Util.SerializeArrayOfChildIntacctObject(CustomFields, "customfields", "customfield", serializedElements);
-			Util.SerializeChildIntacctObject(ReconDate, "recon_date", serializedElements);
-			Util.SerializeStringToXml(Currency, "currency", serializedElements);
-			Util.SerializeChildIntacctObject(ExchangeRateDate, "exchratedate", serializedElements);
-			Util.SerializeStringToXml(ExchangeRateType, "exchratetype", serializedElements);
-			Util.SerializeStringToXml(ExchangeRate, "exchrate", serializedElements);
+			Serializer.SerializeStringToXml(trtypeString, "trtype", serializedElements);
+			Serializer.SerializeStringToXml(amountString, "amount", serializedElements);
+			Serializer.SerializeStringToXml(GlAccountNo, "glaccountno", serializedElements);
+			Serializer.SerializeStringToXml(Document, "document", serializedElements);
+			Serializer.SerializeChildIntacctObject(DateCreated, "datecreated", serializedElements);
+			Serializer.SerializeStringToXml(Memo, "memo", serializedElements);
+			Serializer.SerializeStringToXml(LocationId, "locationid", serializedElements);
+			Serializer.SerializeStringToXml(CostCenter, "departmentid", serializedElements);
+			Serializer.SerializeStringToXml(CustomerId, "customerid", serializedElements);
+			Serializer.SerializeStringToXml(VendorId, "vendorid", serializedElements);
+			Serializer.SerializeStringToXml(EmployeeId, "employeeid", serializedElements);
+			Serializer.SerializeStringToXml(ProjectId, "projectid", serializedElements);
+			Serializer.SerializeStringToXml(ItemId, "itemid", serializedElements);
+			Serializer.SerializeStringToXml(ClassId, "classid", serializedElements);
+
+			if (CustomFields?.Length > 0)
+			{
+				serializedElements.Add(Serializer.SerializeArrayOfChildIntacctObject(CustomFields, "customfields", "customfield"));
+			}
+
+			Serializer.SerializeChildIntacctObject(ReconDate, "recon_date", serializedElements);
+			Serializer.SerializeStringToXml(Currency, "currency", serializedElements);
+			Serializer.SerializeChildIntacctObject(ExchangeRateDate, "exchratedate", serializedElements);
+			Serializer.SerializeStringToXml(ExchangeRateType, "exchratetype", serializedElements);
+			Serializer.SerializeStringToXml(ExchangeRate, "exchrate", serializedElements);
 
 			return serializedElements.ToArray();
 		}

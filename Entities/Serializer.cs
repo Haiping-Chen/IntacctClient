@@ -5,7 +5,7 @@ using System.Xml.Linq;
 
 namespace Intacct.Entities
 {
-	internal static class Util
+	internal static class Serializer
 	{
 		public static T[] DeserializeArrayOfChildIntacctObject<T>(XElement sourceElement) where T : IntacctObject
 		{
@@ -54,10 +54,8 @@ namespace Intacct.Entities
 			return (T) Activator.CreateInstance(typeof(T), element);
 		}
 
-		public static void SerializeArrayOfChildIntacctObject(IntacctObject[] sourceObjects, string listElementName, string childElementName, List<XObject> targetElementList)
+		public static XElement SerializeArrayOfChildIntacctObject(IEnumerable<IntacctObject> sourceObjects, string listElementName, string childElementName)
 		{
-			if ((sourceObjects == null) || (sourceObjects.Length <= 0)) return;
-
 			var listElement = new XElement(listElementName);
 			foreach (var currChildIntacctObject in sourceObjects)
 			{
@@ -66,7 +64,7 @@ namespace Intacct.Entities
 				listElement.Add(currChildElement);
 			}
 
-			targetElementList.Add(listElement);
+			return listElement;
 		}
 
 		public static void SerializeChildIntacctObject(IntacctObject sourceObject, string elementName, List<XObject> targetElementList)
@@ -75,6 +73,7 @@ namespace Intacct.Entities
 
 			var newElement = new XElement(elementName);
 			newElement.Add(sourceObject.ToXmlElements());
+
 			targetElementList.Add(newElement);
 		}
 
