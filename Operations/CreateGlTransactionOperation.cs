@@ -29,8 +29,7 @@ namespace Intacct.Operations
     /// </remarks>
     public class CreateGlTransactionOperation : IntacctAuthenticatedOperationBase<IntacctGeneralLedgerTransaction>
     {
-        #region Constructor
-        public CreateGlTransactionOperation( IIntacctSession newParentSession, IntacctGeneralLedgerTransaction newTransaction, string newReferenceno = null, string newSourceentity = null, IntacctCustomField[] newCustomfields = null, IntacctDate newReverseDate = null )
+        public CreateGlTransactionOperation(IIntacctSession newParentSession, IntacctGeneralLedgerTransaction newTransaction, string newReferenceno = null, string newSourceentity = null, IntacctCustomField[] newCustomfields = null, IntacctDate newReverseDate = null)
             : base(newParentSession, "create_gltransaction", "key")
         {
             // Validate parameters
@@ -39,39 +38,34 @@ namespace Intacct.Operations
             if (newTransaction == null)
                 throw new ArgumentNullException("newGlTransaction");
 
-            transaction     = newTransaction;
-            reverseDate     = newReverseDate;
-            referenceno     = newReferenceno;
-            sourceentity    = newSourceentity;
-            customfields    = newCustomfields;
+            _transaction     = newTransaction;
+            _reverseDate     = newReverseDate;
+            _referenceno     = newReferenceno;
+            _sourceentity    = newSourceentity;
+            _customfields    = newCustomfields;
         }
-        #endregion Constructor
 
-        #region Protected IntacctAuthenticatedOperationBase
         protected override XObject[] CreateFunctionContents()
         {
             var serializedElements = new List<XObject>();
-            serializedElements.AddRange(transaction.ToXmlElements());
-            Util.SerializeChildIntacctObject(reverseDate, "reversedate", serializedElements);
-            Util.SerializeStringToXml(referenceno, "referenceno", serializedElements);
-            Util.SerializeStringToXml(sourceentity, "sourceentity", serializedElements);
-            Util.SerializeArrayOfChildIntacctObject(customfields, "customfields", "customfield", serializedElements);
+            serializedElements.AddRange(_transaction.ToXmlElements());
+            Util.SerializeChildIntacctObject(_reverseDate, "reversedate", serializedElements);
+            Util.SerializeStringToXml(_referenceno, "referenceno", serializedElements);
+            Util.SerializeStringToXml(_sourceentity, "sourceentity", serializedElements);
+            Util.SerializeArrayOfChildIntacctObject(_customfields, "customfields", "customfield", serializedElements);
             return serializedElements.ToArray();
         }
 
-        protected override IntacctOperationResult<IntacctGeneralLedgerTransaction> ProcessResponseData( XElement responseData )
+        protected override IntacctOperationResult<IntacctGeneralLedgerTransaction> ProcessResponseData(XElement responseData)
         {
             var deserializedTransaction = new IntacctGeneralLedgerTransaction(responseData);
             return new IntacctOperationResult<IntacctGeneralLedgerTransaction>(deserializedTransaction);
         }
-        #endregion Protected IntacctAuthenticatedOperationBase
 
-        #region Private Data Members
-        private readonly IntacctGeneralLedgerTransaction    transaction;
-        private readonly IntacctDate                        reverseDate;
-        private readonly string                             referenceno;
-        private readonly string                             sourceentity;
-        private readonly IntacctCustomField[]               customfields;
-        #endregion Private Data Members
+        private readonly IntacctGeneralLedgerTransaction    _transaction;
+        private readonly IntacctDate                        _reverseDate;
+        private readonly string                             _referenceno;
+        private readonly string                             _sourceentity;
+        private readonly IntacctCustomField[]               _customfields;
     }
 }

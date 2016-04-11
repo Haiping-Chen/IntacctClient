@@ -40,10 +40,13 @@
     <Compile Include="Entities\IntacctAddress.cs" />
     <Compile Include="Entities\IntacctContact.cs" />
     <Compile Include="Entities\IntacctCustomer.cs" />
+    <Compile Include="Entities\IntacctCustomField.cs" />
     <Compile Include="Entities\IntacctDate.cs" />
+    <Compile Include="Entities\IntacctGeneralLedgerEntry.cs" />
     <Compile Include="Entities\IntacctGeneralLedgerTransaction.cs" />
     <Compile Include="Entities\IntacctInvoice.cs" />
     <Compile Include="Entities\IntacctLineItem.cs" />
+    <Compile Include="Entities\JournalId.cs" />
     <Compile Include="Entities\Util.cs" />
     <Compile Include="IIntacctClient.cs" />
     <Compile Include="Infrastructure\IntacctNameAttribute.cs" />
