@@ -40,9 +40,15 @@
     <Compile Include="Entities\IntacctAddress.cs" />
     <Compile Include="Entities\IntacctContact.cs" />
     <Compile Include="Entities\IntacctCustomer.cs" />
+    <Compile Include="Entities\IntacctCustomField.cs" />
     <Compile Include="Entities\IntacctDate.cs" />
+    <Compile Include="Entities\IntacctGeneralLedgerEntry.cs" />
+    <Compile Include="Entities\IntacctGeneralLedgerEntryType.cs" />
+    <Compile Include="Entities\IntacctGeneralLedgerTransaction.cs" />
     <Compile Include="Entities\IntacctInvoice.cs" />
     <Compile Include="Entities\IntacctLineItem.cs" />
+    <Compile Include="Entities\JournalId.cs" />
+    <Compile Include="Entities\Serializer.cs" />
     <Compile Include="IIntacctClient.cs" />
     <Compile Include="Infrastructure\IntacctNameAttribute.cs" />
     <Compile Include="IIntacctServiceResponse.cs" />
@@ -50,6 +56,7 @@
     <Compile Include="Infrastructure\LambdaExtensions.cs" />
     <Compile Include="IntacctServiceException.cs" />
     <Compile Include="Operations\CreateCustomerOperation.cs" />
+    <Compile Include="Operations\CreateGlTransactionOperation.cs" />
     <Compile Include="Operations\CreateInvoiceOperation.cs" />
     <Compile Include="Operations\GetEntityOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
