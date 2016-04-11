@@ -15,13 +15,7 @@ namespace Intacct.Entities
 	[SuppressMessage("ReSharper", "UnusedMember.Global")]
 	public class IntacctGeneralLedgerEntry : IntacctObject
 	{
-		public enum EntryType
-		{
-			Credit,
-			Debit
-		}
-
-		public EntryType Type { get; set; }
+		public IntacctGeneralLedgerEntryType Type { get; set; }
 		public decimal Amount { get; set; }
 		public string GlAccountNo { get; set; }
 		public string Document { get; set; }
@@ -73,8 +67,8 @@ namespace Intacct.Entities
 
 			var entryTypeString = Util.DeserializeXmlToString(data, "trtype");
 			Type = string.Equals(entryTypeString, "debit")
-				       ? EntryType.Debit
-				       : EntryType.Credit;
+				       ? IntacctGeneralLedgerEntryType.Debit
+				       : IntacctGeneralLedgerEntryType.Credit;
 		}
 
 		internal override XObject[] ToXmlElements()
@@ -83,7 +77,7 @@ namespace Intacct.Entities
 			var amountString = $"{Amount:############.00}";
 
 			// API requires lower case
-			var trtypeString = Type == EntryType.Debit ? "debit" : "credit";
+			var trtypeString = Type == IntacctGeneralLedgerEntryType.Debit ? "debit" : "credit";
 
 			Util.SerializeStringToXml(trtypeString, "trtype", serializedElements);
 			Util.SerializeStringToXml(amountString, "amount", serializedElements);

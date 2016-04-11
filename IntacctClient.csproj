@@ -43,6 +43,7 @@
     <Compile Include="Entities\IntacctCustomField.cs" />
     <Compile Include="Entities\IntacctDate.cs" />
     <Compile Include="Entities\IntacctGeneralLedgerEntry.cs" />
+    <Compile Include="Entities\IntacctGeneralLedgerEntryType.cs" />
     <Compile Include="Entities\IntacctGeneralLedgerTransaction.cs" />
     <Compile Include="Entities\IntacctInvoice.cs" />
     <Compile Include="Entities\IntacctLineItem.cs" />

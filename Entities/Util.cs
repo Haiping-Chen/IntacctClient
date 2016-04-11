@@ -17,15 +17,15 @@ namespace Intacct.Entities
 		/// <summary>
 		/// Reads in the value of the specified child XML element.
 		/// </summary>
-		/// <param name="sourceElement">The source element that contains an element with the specified name</param>
-		/// <param name="sourceChildElementName">Name of the source element within sourceElement.  There must be only one with this name.</param>
-		/// <returns>The value of the specified XML element child of sourceElement, or NULL if none.</returns>
-		public static string DeserializeXmlToString(XElement sourceElement, string sourceChildElementName)
+		/// <param name="element">The source element that contains an element with the specified name</param>
+		/// <param name="childElementName">Name of the source element within element. There must be only one with this name.</param>
+		/// <returns>The value of the specified XML element child of element, or NULL if none.</returns>
+		public static string DeserializeXmlToString(XElement element, string childElementName)
 		{
-			if (sourceElement == null) throw new ArgumentNullException(nameof(sourceElement));
-			if (string.IsNullOrWhiteSpace(sourceChildElementName)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(sourceChildElementName));
+			if (element == null) throw new ArgumentNullException(nameof(element));
+			if (string.IsNullOrWhiteSpace(childElementName)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(childElementName));
 
-			var sourceChildElement = sourceElement.Elements(XName.Get(sourceChildElementName));
+			var sourceChildElement = element.Elements(XName.Get(childElementName));
 
 			var childElement = sourceChildElement as IList<XElement> ?? sourceChildElement.ToList();
 			return childElement.Count == 1 ? childElement.First().Value : null;
@@ -34,24 +34,24 @@ namespace Intacct.Entities
 		/// <summary>
 		/// Reads in the value of the specified child XML element into an IntacctObject
 		/// </summary>
-		/// <param name="sourceElement">The source element that contains an element with the specified name</param>
-		/// <param name="sourceChildElementName">Name of the source element within sourceElement.  There must be only one with this name.</param>
+		/// <param name="element">The source element that contains an element with the specified name</param>
+		/// <param name="childElementName">Name of the source element within element.  There must be only one with this name.</param>
 		/// <returns>The IntacctObject deserialized from the element, or NULL if the specified child element does not exist</returns>
-		public static T DeserializeXmlToIntacctObject<T>(XElement sourceElement, string sourceChildElementName) where T : IntacctObject
+		public static T DeserializeXmlToIntacctObject<T>(XElement element, string childElementName) where T : IntacctObject
 		{
-			return DeserializeXmlToIntacctObject<T>(sourceElement.Element(sourceChildElementName));
+			return DeserializeXmlToIntacctObject<T>(element.Element(childElementName));
 		}
 
 		/// <summary>
 		/// Reads in the value of the specified child XML element into an IntacctObject
 		/// </summary>
-		/// <param name="sourceElement">The source element that contains an element with the specified name</param>
+		/// <param name="element">The source element that contains an element with the specified name</param>
 		/// <returns>The IntacctObject deserialized from the element, or NULL if the specified child element does not exist</returns>
-		public static T DeserializeXmlToIntacctObject<T>(XElement sourceElement) where T : IntacctObject
+		public static T DeserializeXmlToIntacctObject<T>(XElement element) where T : IntacctObject
 		{
-			if (sourceElement == null) return null;
+			if (element == null) return null;
 
-			return (T) Activator.CreateInstance(typeof(T), sourceElement);
+			return (T) Activator.CreateInstance(typeof(T), element);
 		}
 
 		public static void SerializeArrayOfChildIntacctObject(IntacctObject[] sourceObjects, string listElementName, string childElementName, List<XObject> targetElementList)

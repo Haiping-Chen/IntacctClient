@@ -60,49 +60,30 @@ namespace Intacct.Entities
 		}
 
 		/// <summary>
-		/// Adds a debit/credit pair of GL entries for the same amount, datecreated = today, with the specified values, crediting source and debiting target
+		/// Adds a debit/credit pair of GL entries.
 		/// </summary>
-		/// <param name="newEntryAmount"></param>
-		/// <param name="newEntryAccountNo"></param>
-		/// <param name="newEntryMemo"></param>
-		/// <param name="newEntrySourceClassId"></param>
-		/// <param name="newEntrySourceCostCenter"></param>
-		/// <param name="newEntryTargetClassId"></param>
-		/// <param name="newEntryTargetCostCenter"></param>
-		public void AddEntryPair(decimal newEntryAmount, string newEntryAccountNo, string newEntryMemo, string newEntrySourceClassId, string newEntrySourceCostCenter, string newEntryTargetClassId, string newEntryTargetCostCenter)
+		/// <remarks>
+		/// The pair should balance to zero. However, since transactions may come with different exchange rates and currencies,
+		/// this is not explicitly validated.
+		/// </remarks>
+		public void AddEntryPair(IntacctGeneralLedgerEntry credit, IntacctGeneralLedgerEntry debit)
 		{
-			var sourceEntry = new IntacctGeneralLedgerEntry
-				                  {
-					                  Amount = newEntryAmount,
-					                  Type = IntacctGeneralLedgerEntry.EntryType.Credit,
-					                  DateCreated = new IntacctDate(DateTime.Now),
-					                  Memo = newEntryMemo,
-					                  GlAccountNo = newEntryAccountNo,
-					                  ClassId = newEntrySourceClassId,
-					                  CostCenter = newEntrySourceCostCenter
-				                  };
+			if (credit == null) throw new ArgumentNullException(nameof(credit));
+			if (debit == null) throw new ArgumentNullException(nameof(debit));
 
-			var targetEntry = new IntacctGeneralLedgerEntry
-				                  {
-					                  Amount = sourceEntry.Amount,
-					                  Type = IntacctGeneralLedgerEntry.EntryType.Debit,
-					                  DateCreated = sourceEntry.DateCreated,
-					                  Memo = sourceEntry.Memo,
-					                  GlAccountNo = sourceEntry.GlAccountNo,
-					                  ClassId = newEntryTargetClassId,
-					                  CostCenter = newEntryTargetCostCenter
-				                  };
+			if (credit.Type != IntacctGeneralLedgerEntryType.Credit) throw new ArgumentException("Credit entry must be of type Credit", nameof(credit));
+			if (debit.Type != IntacctGeneralLedgerEntryType.Debit) throw new ArgumentException("Debit entry must be of type Credit", nameof(debit));
 
-			var newEntryList = new List<IntacctGeneralLedgerEntry>();
-			if ((GlTransactionEntries != null) && (GlTransactionEntries.Length > 0))
+			var entries = new List<IntacctGeneralLedgerEntry>();
+			if (GlTransactionEntries != null && GlTransactionEntries.Length > 0)
 			{
-				newEntryList.AddRange(GlTransactionEntries);
+				entries.AddRange(GlTransactionEntries);
 			}
 
-			newEntryList.Add(sourceEntry);
-			newEntryList.Add(targetEntry);
+			entries.Add(credit);
+			entries.Add(debit);
 
-			GlTransactionEntries = newEntryList.ToArray();
+			GlTransactionEntries = entries.ToArray();
 		}
 
 		internal override XObject[] ToXmlElements()
