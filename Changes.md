@@ -1,5 +1,6 @@
 # Change log
 
+## 0.4.3
 ## 0.4.2
  - added basic journal support (thanks to David Luxford for contribution!)
 
